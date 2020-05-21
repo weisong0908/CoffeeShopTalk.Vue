@@ -4,7 +4,7 @@ import router from "./router";
 import VueRouter from "vue-router";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
-import { domain, clientId } from "../auth_config.json";
+import { domain, clientId } from "../configs/auth_config.json";
 import { Auth0Plugin } from "./auth";
 
 Vue.config.productionTip = false;
