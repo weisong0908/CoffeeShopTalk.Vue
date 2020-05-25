@@ -18,7 +18,7 @@
                 <div class="level-left"></div>
                 <div class="level-right">
                     <div class="level-item">
-                        <b-button type="is-primary" @click="sendMessage">Send</b-button>
+                        <b-button type="is-primary" @click="sendMessage" icon-left="send">Send</b-button>
                     </div>
                 </div>
             </nav>
@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         sendMessage() {
-            if (this.content & this.content.trim()) {
+            if (this.content && this.content.trim()) {
                 this.$emit("sendMessage", this.content);
                 this.content = "";
             }

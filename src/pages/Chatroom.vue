@@ -7,6 +7,18 @@
                 ref="chatsWindow"
                 id="chatsWindow"
             >
+                <nav class="level">
+                    <div class="level-left"></div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <b-button
+                                size="is-small"
+                                @click="scrollToBottom"
+                                icon-left="arrow-down"
+                            >Scroll to bottom</b-button>
+                        </div>
+                    </div>
+                </nav>
                 <chat-bubble
                     v-for="reply in replies"
                     :key="replies.indexOf(reply)"
@@ -38,7 +50,8 @@ export default {
     data() {
         return {
             connection: {},
-            replies: []
+            replies: [],
+            scrollToBottomButtonVisible: false
         };
     },
     methods: {
@@ -47,7 +60,7 @@ export default {
                 .invoke("SendMessage", this.$auth.user.nickname, content)
                 .catch(err => console.error(err));
         },
-        scroll() {
+        scrollToBottom() {
             this.$refs.chatsWindow.scrollTo({
                 top: this.$refs.chatsWindow.scrollHeight,
                 behavior: "smooth"
@@ -77,7 +90,7 @@ export default {
         });
     },
     updated() {
-        this.scroll();
+        this.scrollToBottom();
     }
 };
 </script>
