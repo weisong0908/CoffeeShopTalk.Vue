@@ -8,7 +8,7 @@ import Profile from "./pages/Profile";
 
 const router = new VueRouter({
     routes: [
-        { name: "chatroom", path: "/chatroom", component: Chatroom },
+        { name: "chatroom", path: "/chatroom", component: Chatroom, beforeEnter: authGuard },
         { name: "profile", path: "/profile", component: Profile, beforeEnter: authGuard },
         { name: "home", path: "/", component: Home }
     ]
