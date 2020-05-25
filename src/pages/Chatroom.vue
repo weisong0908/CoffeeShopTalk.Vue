@@ -1,51 +1,57 @@
 <template>
     <page title="Chatroom">
-        <b-field label="Name">
-            <b-input placeholder="your name" v-model="username"></b-input>
-        </b-field>
-        <b-field label="Message">
-            <b-input maxlength="200" type="textarea" v-model="message"></b-input>
-        </b-field>
-        <div class="buttons">
-            <b-button type="is-primary" @click="sendMessage">Send</b-button>
-        </div>
-        <chat-bubble
-            v-for="reply in replies"
-            :key="reply.time"
-            :profilePicture="$auth.user.picture"
-            :content="reply.message"
-            :username="reply.user"
-            :time="reply.time"
-        ></chat-bubble>
+        <section class="hero is-light">
+            <div
+                class="hero-body"
+                style="height:400px;overflow-y:auto;"
+                ref="chatsWindow"
+                id="chatsWindow"
+            >
+                <chat-bubble
+                    v-for="reply in replies"
+                    :key="replies.indexOf(reply)"
+                    :profilePicture="$auth.user.picture"
+                    :content="reply.message"
+                    :username="reply.user"
+                    :time="reply.time"
+                ></chat-bubble>
+            </div>
+        </section>
+        <section class="section">
+            <chat-input @sendMessage="sendMessage"></chat-input>
+        </section>
     </page>
 </template>
 
 <script>
 import Page from "../components/Page";
 import ChatBubble from "../components/ChatBubble";
+import ChatInput from "../components/ChatInput";
 import { HubConnectionBuilder } from "../../node_modules/@microsoft/signalr/dist/browser/signalr";
 
 export default {
     components: {
         Page,
-        ChatBubble
+        ChatBubble,
+        ChatInput
     },
     data() {
         return {
             connection: {},
-            username: "",
-            message: "",
             replies: []
         };
     },
     methods: {
-        sendMessage() {
-            const message = this.message;
+        sendMessage(content) {
             this.connection
-                .invoke("SendMessage", this.username, message)
+                .invoke("SendMessage", this.$auth.user.nickname, content)
                 .catch(err => console.error(err));
-
-            this.message = "";
+        },
+        scroll() {
+            this.$refs.chatsWindow.scrollTo({
+                top: this.$refs.chatsWindow.scrollHeight,
+                behavior: "smooth"
+            });
         }
     },
     mounted() {
@@ -61,6 +67,7 @@ export default {
             .catch(err => {
                 alert(err);
             });
+
         this.connection.on("ReceiveMessage", (user, message) => {
             this.replies.push({
                 user: user,
@@ -68,6 +75,9 @@ export default {
                 time: new Date()
             });
         });
+    },
+    updated() {
+        this.scroll();
     }
 };
 </script>
