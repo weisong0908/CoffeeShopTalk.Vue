@@ -2,10 +2,7 @@
     <b-navbar>
         <template slot="brand">
             <b-navbar-item href="/">
-                <img
-                    src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-                    alt="Coffee Shop Talk"
-                />
+                <img src="../assets/logo.png" alt="Coffee Shop Talk" />
             </b-navbar-item>
         </template>
         <template slot="start">
