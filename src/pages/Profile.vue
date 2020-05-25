@@ -1,7 +1,7 @@
 <template>
     <page title="Profile">
         <div v-if="$auth.isAuthenticated">
-            <img src="$auth.user.picture" alt="profile picture" />
+            <img :src="$auth.user.picture" alt="profile picture" />
             <p>user name: {{ $auth.user.name }}</p>
             <p>user email: {{ $auth.user.email }}</p>
             <div>
