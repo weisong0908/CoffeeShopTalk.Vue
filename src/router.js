@@ -2,9 +2,9 @@ import VueRouter from "vue-router";
 
 import { authGuard } from "./auth/authGuard";
 
-import Home from "./pages/home";
-import Chatroom from "./pages/chatroom";
-import Profile from "./pages/profile";
+import Home from "./pages/Home";
+import Chatroom from "./pages/Chatroom";
+import Profile from "./pages/Profile";
 
 const router = new VueRouter({
     routes: [
