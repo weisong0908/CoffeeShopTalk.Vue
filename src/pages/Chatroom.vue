@@ -1,15 +1,15 @@
 <template>
     <page title="Chatroom">
         <section class="hero is-light">
-            <div
-                class="hero-body"
-                style="height:400px;overflow-y:auto;"
-                ref="chatsWindow"
-                id="chatsWindow"
-            >
-                <nav class="level">
-                    <div class="level-left"></div>
-                    <div class="level-right">
+            <div class="hero-head">
+                <div class="container">
+                    <nav class="level">
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="is-size-7">Message count</p>
+                                <p class="is-size-7">{{ replies.length }}</p>
+                            </div>
+                        </div>
                         <div class="level-item">
                             <b-button
                                 size="is-small"
@@ -17,8 +17,10 @@
                                 icon-left="arrow-down"
                             >Scroll to bottom</b-button>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
+            </div>
+            <div class="hero-body" :style="chatsWindowStyle" ref="chatsWindow">
                 <chat-bubble
                     v-for="reply in replies"
                     :key="replies.indexOf(reply)"
@@ -28,6 +30,7 @@
                     :time="reply.time"
                 ></chat-bubble>
             </div>
+            <div class="hero-foot"></div>
         </section>
         <section class="section">
             <chat-input @sendMessage="sendMessage"></chat-input>
@@ -51,7 +54,10 @@ export default {
         return {
             connection: {},
             replies: [],
-            scrollToBottomButtonVisible: false
+            chatsWindowStyle: {
+                height: "500px",
+                "overflow-y": "auto"
+            }
         };
     },
     methods: {
