@@ -10,6 +10,13 @@
                                 <p class="is-size-7">{{ replies.length }}</p>
                             </div>
                         </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="is-size-7">Connection</p>
+                                <b-icon type="is-success" icon="check-circle" size="is-small" v-if="isConnected"></b-icon>
+                                <b-icon type="is-danger" icon="close-circle" size="is-small" v-else></b-icon>
+                            </div>
+                        </div>
                         <div class="level-item">
                             <b-button
                                 size="is-small"
@@ -53,6 +60,7 @@ export default {
     data() {
         return {
             connection: {},
+            isConnected: false, 
             replies: [],
             chatsWindowStyle: {
                 height: "500px",
@@ -85,13 +93,14 @@ export default {
                     message: "Connected",
                     type: "is-success"
                 });
+                this.isConnected = true;
             })
             .catch(err => {
                 this.$buefy.toast.open({
-                    message: "Connextion failed",
+                    message: "Connection failed",
                     type: "is-danger"
                 });
-
+                this.isConnected = false;
                 console.error(err);
             });
 
