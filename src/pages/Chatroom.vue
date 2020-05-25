@@ -9,23 +9,26 @@
         <div class="buttons">
             <b-button type="is-primary" @click="sendMessage">Send</b-button>
         </div>
-        <ul>
-            <li v-for="reply in replies" :key="reply.time">
-                <em>[{{ reply.time }}]</em>
-                <b>{{ reply.user }}</b>
-                : {{ reply.message }}
-            </li>
-        </ul>
+        <chat-bubble
+            v-for="reply in replies"
+            :key="reply.time"
+            :profilePicture="$auth.user.picture"
+            :content="reply.message"
+            :username="reply.user"
+            :time="reply.time"
+        ></chat-bubble>
     </page>
 </template>
 
 <script>
 import Page from "../components/Page";
+import ChatBubble from "../components/ChatBubble";
 import { HubConnectionBuilder } from "../../node_modules/@microsoft/signalr/dist/browser/signalr";
 
 export default {
     components: {
-        Page
+        Page,
+        ChatBubble
     },
     data() {
         return {
