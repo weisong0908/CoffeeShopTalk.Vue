@@ -1,6 +1,6 @@
 <template>
     <section class="section">
-        <b-message title="warning" type="is-warning">This page is under development</b-message>
+        <b-message title="Warning" type="is-warning">This page is under development</b-message>
         <div class="tile is-vertical is-ancestor">
             <div class="tile is-parent">
                 <div class="tile is-child">

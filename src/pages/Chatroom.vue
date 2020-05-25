@@ -81,10 +81,18 @@ export default {
         this.connection
             .start()
             .then(() => {
-                alert("connection ok");
+                this.$buefy.toast.open({
+                    message: "Connected",
+                    type: "is-success"
+                });
             })
             .catch(err => {
-                alert(err);
+                this.$buefy.toast.open({
+                    message: "Connextion failed",
+                    type: "is-danger"
+                });
+
+                console.error(err);
             });
 
         this.connection.on("ReceiveMessage", (user, message) => {
