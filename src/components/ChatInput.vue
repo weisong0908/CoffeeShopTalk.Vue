@@ -35,8 +35,10 @@ export default {
     },
     methods: {
         sendMessage() {
-            this.$emit("sendMessage", this.content);
-            this.content = "";
+            if (this.content & this.content.trim()) {
+                this.$emit("sendMessage", this.content);
+                this.content = "";
+            }
         }
     }
 };
