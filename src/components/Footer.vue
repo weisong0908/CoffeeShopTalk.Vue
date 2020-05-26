@@ -4,8 +4,15 @@
             Coffee Shop Talk
             <small class="has-text-grey">&nbsp; {{ appVersion }}</small>
         </p>
-        <p class="subtitle is-6">A project by <a href="https://tengweisong.com" target="_blank" rel="noopener noreferrer">Teng Wei Song</a></p>
-        <hr/>
+        <p class="subtitle is-6">
+            A project by
+            <a
+                href="https://tengweisong.com"
+                target="_blank"
+                rel="noopener noreferrer"
+            >Teng Wei Song</a>
+        </p>
+        <hr />
         <div class="columns">
             <div class="column is-one-third">
                 <p class="title is-4">What is this project?</p>
@@ -13,8 +20,16 @@
                     <strong>Coffee Shop Talk</strong> is a simple real-time text-based chat application. The client- and server-side components are developed separately to ensure loosely coupled architecture.
                 </p>
                 <br />
-                <p>This project makes use of <strong>Github Actions</strong> to achieve CICD (continous integrtion and continous deployment) which ensures latest developemnt is deployed and running immediately.</p>
+                <p>
+                    This project makes use of
+                    <strong>Github Actions</strong> to achieve CICD (continous integrtion and continous deployment), allowing latest developemnt to be deployed to server immediately.
+                </p>
                 <br />
+            </div>
+            <div class="column is-one-third">
+                <p class="title is-4">Technology stack</p>
+                <p class="title is-6">Vue 2.6</p>
+                <p>Vue helps building the frontend as a single page application.</p>
                 <div class="buttons">
                     <b-button
                         tag="a"
@@ -23,6 +38,10 @@
                         target="_blank"
                         icon-left="github-circle"
                     >Frontend repository</b-button>
+                </div>
+                <p class="title is-6">ASP.NET Core 3.1</p>
+                <p>Web APIs and SignalR are used to make real-time communication possible, thanks to the .NET Core technology.</p>
+                <div class="buttons">
                     <b-button
                         tag="a"
                         size="is-small"
@@ -31,14 +50,6 @@
                         icon-left="github-circle"
                     >Backend repository</b-button>
                 </div>
-            </div>
-            <div class="column is-one-third">
-                <p class="title is-4">Technology stack</p>
-                <p class="title is-6">ASP.NET Core 3.1</p>
-                <p>Web APIs and SignalR are used to make real-time communication possible, thanks to the .NET Core technology.</p>
-                <br />
-                <p class="title is-6">Vue 2.6</p>
-                <p>Vue helps building the frontend as a single page application.</p>
             </div>
             <div class="column is-one-third">
                 <p class="title is-4">Attributes</p>
