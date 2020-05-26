@@ -13,7 +13,12 @@
                         <div class="level-item has-text-centered">
                             <div>
                                 <p class="is-size-7">Connection</p>
-                                <b-icon type="is-success" icon="check-circle" size="is-small" v-if="isConnected"></b-icon>
+                                <b-icon
+                                    type="is-success"
+                                    icon="check-circle"
+                                    size="is-small"
+                                    v-if="isConnected"
+                                ></b-icon>
                                 <b-icon type="is-danger" icon="close-circle" size="is-small" v-else></b-icon>
                             </div>
                         </div>
@@ -32,7 +37,7 @@
                     v-for="reply in replies"
                     :key="replies.indexOf(reply)"
                     :profilePicture="$auth.user.picture"
-                    :content="reply.message"
+                    :content="reply.content"
                     :username="reply.user"
                     :time="reply.time"
                 ></chat-bubble>
@@ -60,7 +65,7 @@ export default {
     data() {
         return {
             connection: {},
-            isConnected: false, 
+            isConnected: false,
             replies: [],
             chatsWindowStyle: {
                 height: "500px",
@@ -70,9 +75,20 @@ export default {
     },
     methods: {
         sendMessage(content) {
-            this.connection
-                .invoke("SendMessage", this.$auth.user.nickname, content)
-                .catch(err => console.error(err));
+            const message = {
+                sender: this.$auth.user.nickname,
+                recipient: "someone",
+                content: content
+            };
+
+            this.connection.invoke("SendMessage", message).catch(err => {
+                this.$buefy.toast.open({
+                    message: "Message is not sent",
+                    type: "is-danger"
+                });
+
+                console.error(err);
+            });
         },
         scrollToBottom() {
             this.$refs.chatsWindow.scrollTo({
@@ -104,11 +120,11 @@ export default {
                 console.error(err);
             });
 
-        this.connection.on("ReceiveMessage", (user, message) => {
+        this.connection.on("ReceiveMessage", message => {
             this.replies.push({
-                user: user,
-                message: message,
-                time: new Date()
+                user: message.sender,
+                content: message.content,
+                time: new Date(Date.parse(message.time))
             });
         });
     },
