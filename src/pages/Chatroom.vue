@@ -99,7 +99,9 @@ export default {
     },
     mounted() {
         this.connection = new HubConnectionBuilder()
-            .withUrl(`${process.env.VUE_APP_CHATHUB}`)
+            .withUrl(`${process.env.VUE_APP_CHATHUB}`, {
+                accessTokenFactory: () => this.$auth.getTokenSilently()
+            })
             .build();
 
         this.connection
