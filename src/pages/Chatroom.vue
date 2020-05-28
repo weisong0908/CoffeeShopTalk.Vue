@@ -38,7 +38,7 @@
                     :key="replies.indexOf(reply)"
                     :profilePicture="$auth.user.picture"
                     :content="reply.content"
-                    :username="reply.user"
+                    :username="reply.sender"
                     :time="reply.time"
                 ></chat-bubble>
             </div>
@@ -76,8 +76,9 @@ export default {
     methods: {
         sendMessage(content) {
             const message = {
+                senderId: this.$auth.user.sub,
                 sender: this.$auth.user.nickname,
-                recipient: "someone",
+                recipientId: this.$auth.user.sub,
                 content: content
             };
 
@@ -124,7 +125,7 @@ export default {
 
         this.connection.on("ReceiveMessage", message => {
             this.replies.push({
-                user: message.sender,
+                sender: message.sender,
                 content: message.content,
                 time: new Date(Date.parse(message.time))
             });
