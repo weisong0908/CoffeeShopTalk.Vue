@@ -1,5 +1,6 @@
 <template>
     <page title="Chatroom">
+        <b-button @click="stopConnection">Stop connection</b-button>
         <div class="columns">
             <div class="column is-one-fifth">
                 <div class="hero is-light">
@@ -124,6 +125,9 @@ export default {
                 top: this.$refs.chatsWindow.scrollHeight,
                 behavior: "smooth"
             });
+        },
+        stopConnection() {
+            this.connection.stop();
         }
     },
     mounted() {
@@ -173,6 +177,9 @@ export default {
     },
     updated() {
         this.scrollToBottom();
+    },
+    beforeDestroy() {
+        this.stopConnection();
     }
 };
 </script>
