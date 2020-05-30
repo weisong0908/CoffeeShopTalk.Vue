@@ -5,11 +5,13 @@ import { authGuard } from "./auth/authGuard";
 import Home from "./pages/Home";
 import Chatroom from "./pages/Chatroom";
 import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
 
 const router = new VueRouter({
     routes: [
         { name: "chatroom", path: "/chatroom", component: Chatroom, beforeEnter: authGuard },
         { name: "profile", path: "/profile", component: Profile, beforeEnter: authGuard },
+        { name: "admin", path: "/admin", component: Admin, beforeEnter: authGuard },
         { name: "home", path: "/", component: Home }
     ]
 });

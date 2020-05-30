@@ -30,7 +30,7 @@ export default {
             const token = await this.$auth.getTokenSilently();
 
             const { data } = await axios.get(
-                "https://localhost:5001/WeatherForecast",
+                `${process.env.VUE_APP_WEBAPI}/WeatherForecast`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
