@@ -1,52 +1,72 @@
 <template>
     <page title="Chatroom">
-        <section class="hero is-light">
-            <div class="hero-head">
-                <div class="container">
-                    <nav class="level">
-                        <div class="level-item has-text-centered">
-                            <div>
-                                <p class="is-size-7">Message count</p>
-                                <p class="is-size-7">{{ replies.length }}</p>
-                            </div>
-                        </div>
-                        <div class="level-item has-text-centered">
-                            <div>
-                                <p class="is-size-7">Connection</p>
-                                <b-icon
-                                    type="is-success"
-                                    icon="check-circle"
-                                    size="is-small"
-                                    v-if="isConnected"
-                                ></b-icon>
-                                <b-icon type="is-danger" icon="close-circle" size="is-small" v-else></b-icon>
-                            </div>
-                        </div>
-                        <div class="level-item">
-                            <b-button
-                                size="is-small"
-                                @click="scrollToBottom"
-                                icon-left="arrow-down"
-                            >Scroll to bottom</b-button>
-                        </div>
-                    </nav>
+        <div class="columns">
+            <div class="column is-one-fifth">
+                <div class="hero is-light">
+                    <connected-user
+                        v-for="user in connectedUsers"
+                        :profilePicture="user.profilePicture"
+                        :username="user.username"
+                        :description="user.description"
+                        :key="user.userId"
+                    ></connected-user>
                 </div>
             </div>
-            <div class="hero-body" :style="chatsWindowStyle" ref="chatsWindow">
-                <chat-bubble
-                    v-for="reply in replies"
-                    :key="replies.indexOf(reply)"
-                    :profilePicture="$auth.user.picture"
-                    :content="reply.content"
-                    :username="reply.sender"
-                    :time="reply.time"
-                ></chat-bubble>
+            <div class="column">
+                <section class="hero is-light">
+                    <div class="hero-head">
+                        <div class="container">
+                            <nav class="level">
+                                <div class="level-item has-text-centered">
+                                    <div>
+                                        <p class="is-size-7">Message count</p>
+                                        <p class="is-size-7">{{ replies.length }}</p>
+                                    </div>
+                                </div>
+                                <div class="level-item has-text-centered">
+                                    <div>
+                                        <p class="is-size-7">Connection</p>
+                                        <b-icon
+                                            type="is-success"
+                                            icon="check-circle"
+                                            size="is-small"
+                                            v-if="isConnected"
+                                        ></b-icon>
+                                        <b-icon
+                                            type="is-danger"
+                                            icon="close-circle"
+                                            size="is-small"
+                                            v-else
+                                        ></b-icon>
+                                    </div>
+                                </div>
+                                <div class="level-item">
+                                    <b-button
+                                        size="is-small"
+                                        @click="scrollToBottom"
+                                        icon-left="arrow-down"
+                                    >Scroll to bottom</b-button>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="hero-body" :style="chatsWindowStyle" ref="chatsWindow">
+                        <chat-bubble
+                            v-for="reply in replies"
+                            :key="replies.indexOf(reply)"
+                            :profilePicture="$auth.user.picture"
+                            :content="reply.content"
+                            :username="reply.sender"
+                            :time="reply.time"
+                        ></chat-bubble>
+                    </div>
+                    <div class="hero-foot"></div>
+                </section>
+                <section class="section">
+                    <chat-input @sendMessage="sendMessage"></chat-input>
+                </section>
             </div>
-            <div class="hero-foot"></div>
-        </section>
-        <section class="section">
-            <chat-input @sendMessage="sendMessage"></chat-input>
-        </section>
+        </div>
     </page>
 </template>
 
@@ -54,13 +74,15 @@
 import Page from "../components/Page";
 import ChatBubble from "../components/ChatBubble";
 import ChatInput from "../components/ChatInput";
+import ConnectedUser from "../components/ConnectedUser";
 import { HubConnectionBuilder } from "../../node_modules/@microsoft/signalr/dist/browser/signalr";
 
 export default {
     components: {
         Page,
         ChatBubble,
-        ChatInput
+        ChatInput,
+        ConnectedUser
     },
     data() {
         return {
@@ -70,7 +92,13 @@ export default {
             chatsWindowStyle: {
                 height: "500px",
                 "overflow-y": "auto"
-            }
+            },
+            connectedUsers: [
+                {
+                    username: "Common table",
+                    description: "Send message to everyone"
+                }
+            ]
         };
     },
     methods: {
@@ -123,12 +151,24 @@ export default {
                 console.error(err);
             });
 
-        this.connection.on("ReceiveMessage", message => {
+        this.connection.on("ReceiveMessage", (message, connectionId) => {
             this.replies.push({
                 sender: message.sender,
                 content: message.content,
                 time: new Date(Date.parse(message.time))
             });
+            console.log("connection id", connectionId);
+        });
+
+        this.connection.on("OnConnected", connectionInfo => {
+            this.connectedUsers.push({
+                userId: connectionInfo.userId,
+                username: connectionInfo.username
+            });
+        });
+
+        this.connection.on("OnDisconnected", (connectionInfo, exception) => {
+            console.log("disconncted", connectionInfo, exception);
         });
     },
     updated() {
