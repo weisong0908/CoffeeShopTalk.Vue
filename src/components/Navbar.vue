@@ -21,6 +21,7 @@
                 </div>
                 <div v-if="$auth.isAuthenticated">
                     <b-navbar-item tag="router-link" to="/profile">Profile</b-navbar-item>
+                    <b-navbar-item tag="router-link" to="/admin" v-if="isAdmin">Admin</b-navbar-item>
                     <b-navbar-item @click="logout">Log out</b-navbar-item>
                 </div>
                 <div v-else>
@@ -42,6 +43,16 @@ export default {
             this.$auth.logout({
                 returnTo: window.location.origin
             });
+        }
+    },
+    computed: {
+        isAdmin() {
+            if (this.$auth.user["https://coffee-shop-talk-stg/roles"]) {
+                return this.$auth.user[
+                    "https://coffee-shop-talk-stg/roles"
+                ].includes("admin");
+            }
+            return false;
         }
     }
 };

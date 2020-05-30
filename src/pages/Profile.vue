@@ -4,6 +4,7 @@
             <img :src="$auth.user.picture" alt="profile picture" />
             <p>user name: {{ $auth.user.name }}</p>
             <p>user email: {{ $auth.user.email }}</p>
+            <p>roles: {{ $auth.user["https://coffee-shop-talk-stg/roles"] }}</p>
             <div>
                 <pre>{{ JSON.stringify($auth.user, null, 2) }}</pre>
             </div>
