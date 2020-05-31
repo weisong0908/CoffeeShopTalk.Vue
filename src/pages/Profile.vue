@@ -55,7 +55,7 @@ export default {
             axios
                 .patch(
                     "https://localhost:5001/userprofile/update/",
-                    { newUsername: this.username, userId: this.$auth.user.sub },
+                    { username: this.username, userId: this.$auth.user.sub },
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
