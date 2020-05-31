@@ -20,8 +20,7 @@ export default {
         return {
             pages: [
                 { title: "Chatroom", path: "/chatroom" },
-                { title: "Profile", path: "/profile" },
-                { title: "Admin", path: "/admin" }
+                { title: "Profile", path: "/profile" }
             ]
         };
     }
