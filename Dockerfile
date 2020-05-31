@@ -6,7 +6,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build
+RUN npm run build -- --mode staging
 
 EXPOSE 8080
 ENTRYPOINT [ "http-server", "dist" ]
