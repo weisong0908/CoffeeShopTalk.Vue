@@ -1,7 +1,7 @@
 # CoffeeShopTalk.Vue
 This is the frontend component for **Coffee Shop Talk** project.
 
-![Develop releases](https://github.com/weisong0908/CoffeeShopTalk.Vue/workflows/Develop%20releases/badge.svg)
+![Staging release](https://github.com/weisong0908/CoffeeShopTalk.Vue/workflows/Staging%20release/badge.svg)
 
 ## Project setup
 ```
