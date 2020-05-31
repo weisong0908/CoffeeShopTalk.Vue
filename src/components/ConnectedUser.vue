@@ -13,9 +13,13 @@
                 <br />
                 <div class="level">
                     <div class="level-left">
-                        <div class="level-item">
+                        <div v-if="isConnected" class="level-item">
                             <b-icon type="is-success" icon="power-plug" size="is-small"></b-icon>
-                            <small>online</small>
+                            <small>Online</small>
+                        </div>
+                        <div v-else class="level-item">
+                            <b-icon type="is-danger" icon="power-plug-off" size="is-small"></b-icon>
+                            <small>Offline</small>
                         </div>
                     </div>
                 </div>
@@ -37,6 +41,10 @@ export default {
         description: {
             type: String,
             default: "I am available"
+        },
+        isConnected: {
+            type: Boolean,
+            default: false
         }
     }
 };

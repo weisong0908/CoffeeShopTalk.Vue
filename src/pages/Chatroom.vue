@@ -9,6 +9,7 @@
                         :profilePicture="user.profilePicture"
                         :username="user.username"
                         :description="user.description"
+                        :isConnected="user.connection.isConnected"
                         :key="user.userId"
                     ></connected-user>
                 </div>
@@ -94,12 +95,7 @@ export default {
                 height: "500px",
                 "overflow-y": "auto"
             },
-            connectedUsers: [
-                {
-                    username: "Common table",
-                    description: "Send message to everyone"
-                }
-            ]
+            connectedUsers: []
         };
     },
     methods: {
@@ -164,15 +160,13 @@ export default {
             console.log("connection id", connectionId);
         });
 
-        this.connection.on("OnConnected", connectionInfo => {
-            this.connectedUsers.push({
-                userId: connectionInfo.userId,
-                username: connectionInfo.username
-            });
+        this.connection.on("OnConnected", connectedUsers => {
+            this.connectedUsers = connectedUsers;
         });
 
-        this.connection.on("OnDisconnected", (connectionInfo, exception) => {
-            console.log("disconncted", connectionInfo, exception);
+        this.connection.on("OnDisconnected", (connectedUsers, exception) => {
+            this.connectedUsers = connectedUsers;
+            if (exception) console.warn("disconnected", exception);
         });
     },
     updated() {
