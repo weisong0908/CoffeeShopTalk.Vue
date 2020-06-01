@@ -54,7 +54,7 @@ export default {
 
             axios
                 .patch(
-                    "https://localhost:5001/userprofile/update/",
+                    process.env.VUE_APP_WEBAPI + "/userprofile/update/",
                     { username: this.username, userId: this.$auth.user.sub },
                     {
                         headers: {
