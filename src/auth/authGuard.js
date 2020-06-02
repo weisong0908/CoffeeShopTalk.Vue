@@ -7,7 +7,7 @@ export const authGuard = (to, from, next) => {
         // If the user is authenticated, continue with the route
         if (authService.isAuthenticated) {
             if (to.name === "admin") {
-                if (authService.user['https://coffee-shop-talk-stg/roles'].includes('admin'))
+                if (authService.user['https://coffee-shop-talk/roles'].includes('admin'))
                     return next();
                 else
                     return next({ name: from.name });

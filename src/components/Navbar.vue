@@ -47,9 +47,9 @@ export default {
     },
     computed: {
         isAdmin() {
-            if (this.$auth.user["https://coffee-shop-talk-stg/roles"]) {
+            if (this.$auth.user["https://coffee-shop-talk/roles"]) {
                 return this.$auth.user[
-                    "https://coffee-shop-talk-stg/roles"
+                    "https://coffee-shop-talk/roles"
                 ].includes("admin");
             }
             return false;
