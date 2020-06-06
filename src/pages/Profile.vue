@@ -131,15 +131,20 @@ export default {
                 formData.append("profilePicture", this.newProfilePicture);
             }
 
-            axios.patch(
-                process.env.VUE_APP_WEBAPI + "/userprofile/update/",
-                formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
+            axios
+                .patch(
+                    process.env.VUE_APP_WEBAPI + "/userprofile/update/",
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
                     }
-                }
-            );
+                )
+                .then(resp => {
+                    console.log("resp", resp);
+                    this.$router.go(this.$route.path);
+                });
         },
         resetChanges() {
             this.isProfileEditModalShown = false;

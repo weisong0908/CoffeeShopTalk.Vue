@@ -10,6 +10,8 @@
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.8.1",
         "@microsoft/signalr": "^3.1.4",
+        "@sentry/browser": "^5.16.1",
+        "@sentry/integrations": "^5.16.1",
         "axios": "^0.19.2",
         "buefy": "^0.8.19",
         "core-js": "^3.6.4",
