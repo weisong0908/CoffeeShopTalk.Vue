@@ -11,7 +11,7 @@
                     maxlength="200"
                     type="textarea"
                     v-model="content"
-                    placeholder="Tyoe your message here..."
+                    placeholder="Type your message here..."
                 ></b-input>
             </b-field>
             <nav class="level">

@@ -1,5 +1,5 @@
 <template>
-    <article class="media">
+    <article class="media" style="cursor:pointer">
         <figure class="media-left">
             <p class="image is-64x64">
                 <img :src="profilePicture" alt="profile picture" />

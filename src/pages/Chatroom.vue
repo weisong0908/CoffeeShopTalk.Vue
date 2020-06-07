@@ -11,6 +11,7 @@
                         :description="user.description"
                         :isConnected="user.connection.isConnected"
                         :key="user.userId"
+                        @click.native="selectRecipient(user)"
                     ></connected-user>
                 </div>
             </div>
@@ -19,6 +20,14 @@
                     <div class="hero-head">
                         <div class="container">
                             <nav class="level">
+                                <div class="level-item has-text-centered">
+                                    <div>
+                                        <p class="is-size-7">Message with</p>
+                                        <p class="is-size-7">
+                                            <b>{{ recipient == null? "select a user to chat to": recipient.username }}</b>
+                                        </p>
+                                    </div>
+                                </div>
                                 <div class="level-item has-text-centered">
                                     <div>
                                         <p class="is-size-7">Message count</p>
@@ -56,7 +65,7 @@
                         <chat-bubble
                             v-for="reply in replies"
                             :key="replies.indexOf(reply)"
-                            :profilePicture="$auth.user.picture"
+                            :profilePicture="reply.profilePicture"
                             :content="reply.content"
                             :username="reply.sender"
                             :time="reply.time"
@@ -95,15 +104,28 @@ export default {
                 height: "500px",
                 "overflow-y": "auto"
             },
-            connectedUsers: []
+            connectedUsers: [],
+            recipient: null
         };
     },
     methods: {
+        selectRecipient(user) {
+            this.recipient = user;
+        },
         sendMessage(content) {
+            if (this.recipient == null) {
+                this.$buefy.toast.open({
+                    message: "Please choose a recipient",
+                    type: "is-warning"
+                });
+
+                console.error("no recipient is selected");
+                return;
+            }
             const message = {
                 senderId: this.$auth.user.sub,
                 sender: this.$auth.user.nickname,
-                recipientId: this.$auth.user.sub,
+                recipientId: this.recipient.userId,
                 content: content
             };
 
@@ -151,21 +173,25 @@ export default {
                 console.error(err);
             });
 
-        this.connection.on("ReceiveMessage", (message, connectionId) => {
+        this.connection.on("ReceiveMessage", (message, connectionInfo) => {
             this.replies.push({
                 sender: message.sender,
+                profilePicture: connectionInfo.profilePicture,
                 content: message.content,
                 time: new Date(Date.parse(message.time))
             });
-            console.log("connection id", connectionId);
         });
 
         this.connection.on("OnConnected", connectedUsers => {
-            this.connectedUsers = connectedUsers;
+            this.connectedUsers = connectedUsers.filter(
+                u => u.userId != this.$auth.user.sub
+            );
         });
 
         this.connection.on("OnDisconnected", (connectedUsers, exception) => {
-            this.connectedUsers = connectedUsers;
+            this.connectedUsers = connectedUsers.filter(
+                u => u.userId != this.$auth.user.sub
+            );
             if (exception) console.warn("disconnected", exception);
         });
     },
