@@ -1,6 +1,8 @@
 # CoffeeShopTalk.Vue
 This is the frontend component for **Coffee Shop Talk** project.
 
+The app is live at https://coffee-shop-talk-vue-stg.tengweisong.com/#/
+
 ![Staging release](https://github.com/weisong0908/CoffeeShopTalk.Vue/workflows/Staging%20release/badge.svg)
 
 ## Project setup
